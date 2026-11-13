@@ -5,3 +5,4 @@ CLAUDE.local.md
 COMPACT-STATE.md
 shots/
 .playwright-cli/
+docs/.show-check.json
