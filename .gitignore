@@ -1,0 +1,6 @@
+node_modules/
+.vercel/
+*.log
+CLAUDE.local.md
+COMPACT-STATE.md
+shots/
