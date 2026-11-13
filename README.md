@@ -19,9 +19,10 @@ made up and generated in the visitor's browser.
 | Bonde Wholesale, `https://imali-ai-agentic-supplier.vercel.app/` | `supplier/` | `bonde_wholesale` | `bonde_sales_desk` |
 
 `imali_bookkeeper` reads and writes the book through five site actions, hands written
-statements of trading to `statement_writer`, and calls `bonde_wholesale` through the link in
-`shop/links.json`. The visitor approves before the browser contacts the second site, and the
-peer network runs in the visitor's browser on the visitor's own model.
+statements of trading to `statement_writer`, and calls Bonde Wholesale's network by its full
+address, `https://imali-ai-agentic-supplier.vercel.app/bonde_wholesale`. The visitor approves
+on a card before the browser contacts the second site, and the partner network runs in the
+visitor's browser on the visitor's own model, within the shop's step limit.
 
 | Action | Effect | What it does |
 | --- | --- | --- |
@@ -34,6 +35,19 @@ peer network runs in the visitor's browser on the visitor's own model.
 Every change to the book opens a confirmation dialog with the exact entries, so no write runs
 before the visitor sees it (section 3.1). A saved entry is corrected with a new entry, as in
 any account book.
+
+## Linked site
+
+The shop calls Bonde Wholesale, `https://imali-ai-agentic-supplier.vercel.app/bonde_wholesale`.
+Before anything is sent, a card shows "Bonde Wholesale", its host and the first 140 characters
+of the request; **Always allow** skips the card for that host until the page is reloaded. A
+request holds only item names and quantities: the agent is told never to put names, emails,
+phone numbers or codes in it, but the runtime does not filter it, so the visitor checks it on
+the card. Bonde Wholesale's network runs in this browser on the visitor's key, with none of its
+site's tools; it answers from its published price list and terms. A call costs more than the
+card's token estimate. Other agentic websites can call the shop's network the same way, at
+`https://imali-ai-agentic-web.vercel.app/imali_shop_book`; run there, it has no access to any
+book and says so.
 
 ## Run it locally
 
@@ -78,15 +92,16 @@ the runtime's own runner and the site's own actions, with the key taken from the
 | `shop/site-actions.js` | The site actions the agents call |
 | `shop/site.js` | Boots the runtime and draws the confirmation dialog |
 | `shop/imali_shop_book.hocon` | Source of the network; `imali_shop_book.network.json` is built from it |
-| `shop/agent-manifest.json`, `shop/links.json` | The public manifest and the peer link map |
+| `shop/agent-manifest.json`, `shop/links.json` | The public manifest and the (empty) published link map |
+| `shop/bridge/` | The action bridge other agentic sites load before they run this network; written by the build, shares no actions |
 | `supplier/` | The wholesaler's site, network and price list |
-| `*/runtime/` | The challenge's browser runtime, unchanged (Apache-2.0, see its `LICENSE.txt` and `README.md`) |
-| `tools/vendor/build_network.mjs` | The challenge's network builder, unchanged (Apache-2.0) |
+| `*/runtime/` | The challenge's browser runtime (Apache-2.0, see its `LICENSE.txt`); its `README.md` lists every change, ours included |
+| `tools/vendor/build_network.mjs`, `tools/templates/` | The challenge's network builder and the two templates it reads, unchanged (Apache-2.0) |
 
 ## Licence
 
 Apache-2.0 (`LICENSE`). The runtime and the network builder come from
 [cognizant-ai-labs/agentic-web](https://github.com/cognizant-ai-labs/agentic-web) at commit
-`3c18918` under Apache-2.0. The fonts are Plus Jakarta Sans, Space Grotesk and Space Mono
+`21b77cb` (13 Nov 2026) under Apache-2.0. The fonts are Plus Jakarta Sans, Space Grotesk and Space Mono
 under the SIL Open Font License (`*/assets/fonts/OFL-*.txt`). The Imali AI name and logo
 belong to Ebenworks.

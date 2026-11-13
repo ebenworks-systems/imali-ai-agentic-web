@@ -5,7 +5,8 @@
 
 The shop is served on 127.0.0.1:<shop-port> and the supplier on 127.0.0.1:<supplier-port>,
 so the shop's agents load the supplier's network from a second origin, as they do live.
-The shop's links.json is rewritten to point at the local supplier.
+Every shop file that names the live supplier's address is served with the local supplier's
+address instead, so the shop's partner tool, allowed peer and page link all point here.
 
 --proxy adds the spec's caller-site BYOK proxy (MVP Profile 0.2, section 4) for routers that
 do not allow browser CORS: the shop forwards POST /llm/<path> to <URL>/<path> with the
@@ -15,7 +16,6 @@ the chat settings to http://127.0.0.1:<shop-port>/llm. Local development only.
 
 import argparse
 import http.server
-import json
 import threading
 import urllib.error
 import urllib.request
@@ -24,12 +24,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 AGENT_FILES = ("agent-manifest.json", "links.json", "agent-mcp.json")
+LIVE_SUPPLIER = "https://imali-ai-agentic-supplier.vercel.app"
+REWRITTEN = (".json", ".html", ".js")
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     """Static files with CORS on the public agent files, plus the optional proxy."""
 
-    links_override = None
+    supplier_origin = None
     proxy = None
 
     def end_headers(self):
@@ -40,14 +42,19 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         super().end_headers()
 
     def do_GET(self):
-        if self.links_override is not None and self.path.split("?")[0] == "/links.json":
-            body = json.dumps(self.links_override, indent=2).encode()
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Content-Length", str(len(body)))
-            self.end_headers()
-            self.wfile.write(body)
-            return
+        path = self.path.split("?")[0]
+        if self.supplier_origin and path.endswith(REWRITTEN):
+            file = Path(self.directory) / path.lstrip("/")
+            if file.is_file() and file.resolve().is_relative_to(Path(self.directory).resolve()):
+                text = file.read_text(encoding="utf-8")
+                if LIVE_SUPPLIER in text:
+                    body = text.replace(LIVE_SUPPLIER, self.supplier_origin).encode()
+                    self.send_response(200)
+                    self.send_header("Content-Type", self.guess_type(str(file)))
+                    self.send_header("Content-Length", str(len(body)))
+                    self.end_headers()
+                    self.wfile.write(body)
+                    return
         super().do_GET()
 
     def do_POST(self):
@@ -79,9 +86,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         pass
 
 
-def serve(folder, port, links_override=None, proxy=None):
+def serve(folder, port, supplier_origin=None, proxy=None):
     """Start a threaded static server for one folder."""
-    handler = type("SiteHandler", (Handler,), {"links_override": links_override, "proxy": proxy})
+    handler = type("SiteHandler", (Handler,), {"supplier_origin": supplier_origin, "proxy": proxy})
     server = http.server.ThreadingHTTPServer(("127.0.0.1", port), partial(handler, directory=str(folder)))
     threading.Thread(target=server.serve_forever, daemon=True).start()
     return server
@@ -94,9 +101,8 @@ def main():
     parser.add_argument("--proxy", default=None)
     args = parser.parse_args()
     supplier = f"http://127.0.0.1:{args.supplier_port}"
-    links = {"version": 1, "networks": {"imali_shop_book": {"bonde_wholesale": f"{supplier}/bonde_wholesale"}}}
     serve(ROOT / "supplier", args.supplier_port)
-    serve(ROOT / "shop", args.shop_port, links_override=links, proxy=args.proxy)
+    serve(ROOT / "shop", args.shop_port, supplier_origin=supplier, proxy=args.proxy)
     print(f"shop      http://127.0.0.1:{args.shop_port}/")
     print(f"supplier  {supplier}/")
     if args.proxy:

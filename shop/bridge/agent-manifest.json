@@ -1,0 +1,10 @@
+{
+  "networks": [
+    {
+      "name": "imali_shop_book"
+    }
+  ],
+  "actions": {
+    "version": 1
+  }
+}

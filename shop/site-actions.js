@@ -25,14 +25,24 @@ class SiteActions {
     actions.register(SiteActions.closeDayAction());
   }
 
+  /**
+   * The supplier's own page, read from the page's link, so the agent can send the owner there.
+   *
+   * :return: {name, page}, the page being the link's address.
+   */
+  static supplierLink() {
+    const link = globalThis.document?.querySelector?.('a[data-partner="bonde_wholesale"]');
+    return { name: "Bonde Wholesale", page: link?.href || "https://imali-ai-agentic-supplier.vercel.app/" };
+  }
+
   /** The read action: the whole book as the page shows it. */
   static readBookAction() {
     return {
       name: "read_book",
-      description: "Read the shop book: shop, today's date, open or closed, version, stock with ids, local names, prices and amounts on hand, today's entries and totals, cash from the book, who owes the shop, and recent order lists.",
+      description: "Read the shop book: shop, today's date, open or closed, version, stock with ids, local names, prices and amounts on hand, today's entries and totals, cash from the book, who owes the shop, recent order lists, and the supplier's page link.",
       effect: "read",
       inputSchema: { type: "object", properties: {}, additionalProperties: false },
-      execute: () => App.page.getState(),
+      execute: () => ({ ...App.page.getState(), supplier: SiteActions.supplierLink() }),
     };
   }
 

@@ -8,7 +8,8 @@
 //
 // It fetches the site's agent-manifest.json, every network it lists, links.json and the
 // runtime entry, validates each network with the browser runtime's own validator, follows
-// each published peer link to the peer's manifest and network, and checks the CORS header
+// each published peer link and each partner named by URL in the network to the peer's
+// manifest and network, checks the action bridge callers frame, and checks the CORS header
 // a caller on another origin needs. It sends no key and calls no model.
 // Exit code 0 when every required check passes, 1 otherwise.
 
@@ -119,6 +120,44 @@ class SiteCheck {
   }
 
   /**
+   * The partner networks a network calls by full URL in its agents' tools.
+   *
+   * :param config: The network file.
+   * :return: The distinct http(s) URLs.
+   */
+  static partnerUrls(config) {
+    const urls = new Set();
+    for (const agent of config.tools || []) {
+      for (const ref of agent.tools || []) {
+        if (typeof ref === "string" && /^https?:\/\//.test(ref)) urls.add(ref);
+      }
+    }
+    return [...urls];
+  }
+
+  /**
+   * Check the action bridge that other agentic sites load in a hidden frame before they run
+   * this site's network: published, and not blocked from framing.
+   *
+   * :param actions: The manifest's actions block.
+   */
+  async bridge(actions) {
+    if (!actions.bridge) {
+      this.note(false, "the manifest names an action bridge for callers on other sites (3.2)", "actions.bridge is missing");
+      return;
+    }
+    const url = new URL(actions.bridge, this.base).href;
+    const got = await SiteCheck.get(url);
+    const ok = !got.error && got.response.ok;
+    this.note(ok, "the action bridge is published (3.2)", ok ? `${url}: HTTP ${got.response.status}` : `${url}: ${got.error || `HTTP ${got.response.status}`}`);
+    if (!ok) return;
+    const xfo = got.response.headers.get("x-frame-options");
+    const csp = got.response.headers.get("content-security-policy") || "";
+    const framable = !xfo && !/frame-ancestors/i.test(csp);
+    this.note(framable, "another site can load the action bridge in a frame (3.2)", framable ? "no X-Frame-Options and no frame-ancestors" : `X-Frame-Options: ${xfo || "none"}; CSP: ${csp || "none"}`);
+  }
+
+  /**
    * Run every check.
    */
   async run() {
@@ -132,8 +171,16 @@ class SiteCheck {
       this.note(fields.length === 0, `network ${entry.name || "?"} has name, front_man and hocon (3.3)`, fields.length ? `missing ${fields.join(", ")}` : "yes");
       if (fields.length) continue;
       const config = await this.artifact(`network ${entry.name}`, new URL(entry.hocon, this.base).href, "3.3");
-      if (config) await this.network(`network ${entry.name}`, config, entry.name, entry.front_man);
+      if (config) {
+        await this.network(`network ${entry.name}`, config, entry.name, entry.front_man);
+        for (const target of SiteCheck.partnerUrls(config)) {
+          const reference = new URL(target).pathname.split("/").filter(Boolean).join("_");
+          this.note(Boolean(manifest.allowed_peers?.includes(new URL(target).origin)), `partner ${reference}'s origin is in allowed_peers (3.3)`, new URL(target).origin);
+          await this.peer(entry.name, reference, target);
+        }
+      }
     }
+    if (manifest.actions) await this.bridge(manifest.actions);
     const router = manifest.llm_router;
     this.note(Boolean(router && (router.base_url || router.byok_router)), "the manifest names an LLM router (3.3, 4)", router ? `base_url ${router.base_url || "none"}, byok_router ${router.byok_router || "none"}` : "llm_router is missing");
     this.note(Boolean(manifest.peer_policy || manifest.allowed_peers), "the manifest states a peer policy (3.3)", manifest.peer_policy ? `mode ${manifest.peer_policy.mode}` : "no peer_policy");

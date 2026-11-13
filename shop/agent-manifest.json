@@ -34,7 +34,7 @@
   "peer_policy": {
     "mode": "closed",
     "deny_origins": [],
-    "note": "Local agents, page-local actions and the Bonde Wholesale agent network only. The visitor approves each contact with another site."
+    "note": "Local agents and page-local actions, and the partner sites in allowed_peers (Bonde Wholesale), which this site calls only after the visitor agrees on a card."
   },
   "agent_mcp": {
     "protocol": "nsdeploy-agent-mcp/v1",
@@ -59,12 +59,7 @@
         "url": "imali_shop_book"
       }
     ],
-    "imports": [
-      {
-        "reference": "bonde_wholesale",
-        "url": "https://imali-ai-agentic-supplier.vercel.app/bonde_wholesale"
-      }
-    ],
+    "imports": [],
     "link_updates": {
       "mode": "browser-local"
     }
@@ -80,6 +75,7 @@
   "actions": {
     "version": 1,
     "module": "./site-actions.js",
+    "bridge": "./bridge/action-bridge.html",
     "agentTools": [
       "read_book",
       "get_report",

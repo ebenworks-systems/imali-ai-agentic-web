@@ -11,12 +11,7 @@
       "url": "imali_shop_book"
     }
   ],
-  "imports": [
-    {
-      "reference": "bonde_wholesale",
-      "url": "https://imali-ai-agentic-supplier.vercel.app/bonde_wholesale"
-    }
-  ],
+  "imports": [],
   "link_updates": {
     "mode": "browser-local"
   }
