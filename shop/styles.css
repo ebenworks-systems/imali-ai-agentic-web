@@ -208,3 +208,9 @@ body > dialog button + button { margin-left: 8px; }
   #agent-app.ns-composed-app [data-ns-slot="chat"] { height: 520px; }
   .foot { padding: 24px 16px 40px; }
 }
+
+.agent-details > summary { cursor: pointer; font-weight: 600; color: var(--deep); padding: 12px 0; }
+.agent-details[open] > summary { margin-bottom: 8px; }
+@media (max-width: 600px) {
+  .hero-card { display: none; }
+}

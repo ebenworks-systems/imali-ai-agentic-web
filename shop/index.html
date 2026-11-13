@@ -134,7 +134,7 @@
         <div class="assistant-intro">
           <h2 id="assistant-heading">Talk to the bookkeeper</h2>
           <p>Write what happened in the shop, or ask about money and stock. Try “Nimeuza mikate 3 na maziwa 2” or “What would Bonde Wholesale charge to restock?”</p>
-          <p class="assistant-note">Add your model key in the settings below the chat. Your messages and this book go to the model provider you choose. The book asks you before anything is saved.</p>
+          <p class="assistant-note">The agent runs on your own model key. Your messages and this book go only to the model provider you choose, and the book asks you before anything is saved.</p>
         </div>
         <p id="assistant-status" role="status">Connecting the agent… If this message stays, the agent could not load. The book still works by hand.</p>
         <div id="agent-app">
@@ -151,6 +151,8 @@
     <section id="for-agents" class="for-agents" aria-labelledby="agents-title">
       <h2 id="agents-title">For agents and the sites that run them</h2>
       <p class="lead">This page follows the Open Agentic Web profile. Its agent network is published as data, runs in the visitor's browser, and can be loaded by any other agentic website.</p>
+      <details class="agent-details" id="agent-details" open>
+      <summary>The network, how to call it and what stays safe</summary>
       <div class="cards">
         <article class="card">
           <h3>The network</h3>
@@ -171,6 +173,7 @@
           <p>Every save opens a dialog with the exact entries. The agent cannot send money, message anyone or delete an entry. This browser contacts another site only after you approve it, and your key goes only to the model provider you chose.</p>
         </article>
       </div>
+      </details>
     </section>
   </main>
 

@@ -50,6 +50,9 @@ export class AssistantMount {
    * :return: The runtime engine, or null when boot failed.
    */
   static async start() {
+    // On a phone the developer cards start folded, so the shop comes first.
+    const agentDetails = document.querySelector("#agent-details");
+    if (agentDetails && globalThis.matchMedia?.("(max-width: 600px)").matches) agentDetails.open = false;
     const status = document.querySelector("#assistant-status");
     const siteBase = new URL("./", import.meta.url).href;
     try {
@@ -66,9 +69,9 @@ export class AssistantMount {
       // runtime's "API key required" badge in runtime/ui.js.
       const needsKey = !booted.engine.mockLLM
         && (!booted.engine.byokKey || booted.engine.byokKey === "demo");
-      status.textContent = needsKey
-        ? "The agent needs your model key. Add it in the settings below the chat."
-        : "The agent is connected to this book.";
+      // The runtime's own badge and settings panel already ask for the key, so the
+      // status line stays empty until the agent is connected.
+      status.textContent = needsKey ? "" : "The agent is connected to this book.";
       if (!needsKey) {
         AssistantMount.greet();
       }
