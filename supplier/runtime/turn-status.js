@@ -1,4 +1,5 @@
 // turn-status.js — user-facing projection of detailed execution events.
+// Changed in the Imali AI shop book copy (13 Nov 2026). See README.md in this folder.
 //
 // The trace and stream APIs retain every event for developer consumers. This
 // controller deliberately reduces them to one transient, non-technical status
@@ -20,8 +21,8 @@ function concise(value, limit = 120) {
   return text.length > limit ? `${text.slice(0, limit - 1)}…` : text;
 }
 
-export function statusTextForEvent(event) {
-  const agent = humanize(event.source?.agent, "An agent");
+export function statusTextForEvent(event, agentNames = {}) {
+  const agent = agentNames[event.source?.agent] || humanize(event.source?.agent, "An agent");
   const tool = humanize(event.tool?.name, "A service");
   switch (event.type) {
     case "turn.started": return "Planning your request…";
@@ -44,7 +45,7 @@ export function statusTextForEvent(event) {
   }
 }
 
-export function createTurnStatusController({ show, hide }) {
+export function createTurnStatusController({ show, hide, agentNames = {} }) {
   let visible = false;
   const clear = () => {
     if (visible) hide();
@@ -56,7 +57,7 @@ export function createTurnStatusController({ show, hide }) {
         clear();
         return;
       }
-      const text = statusTextForEvent(event);
+      const text = statusTextForEvent(event, agentNames);
       if (!text) return;
       visible = true;
       show(text, event);

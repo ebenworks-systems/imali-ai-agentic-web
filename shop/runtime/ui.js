@@ -484,7 +484,10 @@ export function mountApp(root, { engine, trace, manifest }) {
   // --- transient turn status + generative UI (CRUSE widgets) -----------------
   let currentBot = null;
   let turnStatus = null;
+  // The site's own front agent is "Your agent" in the status line, as in the agent list.
+  const frontAgentName = net?.findFrontMan?.();
   const turnStatusController = createTurnStatusController({
+    agentNames: frontAgentName ? { [frontAgentName]: "Your agent" } : {},
     show(text, event) {
       if (!turnStatus) {
         turnStatus = document.createElement("div");
