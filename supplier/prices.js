@@ -15,10 +15,20 @@ async function drawPrices() {
     for (const line of lines) {
       const [item, , pack, packPrice, each] = line.split("|").map((part) => part.trim());
       const tr = document.createElement("tr");
-      for (const [text, numeric] of [[item, false], [pack, false], [`KSh ${Number(packPrice).toLocaleString("en-US")}`, true], [`KSh ${each}`, true]]) {
+      // On a phone the Pack column folds into the item cell, under the item's name.
+      const itemCell = document.createElement("td");
+      const name = document.createElement("span");
+      name.className = "item-name";
+      name.textContent = item;
+      const packUnder = document.createElement("span");
+      packUnder.className = "pack-under";
+      packUnder.textContent = pack;
+      itemCell.append(name, packUnder);
+      tr.append(itemCell);
+      for (const [text, cls] of [[pack, "col-pack"], [`KSh ${Number(packPrice).toLocaleString("en-US")}`, "num"], [`KSh ${each}`, "num"]]) {
         const td = document.createElement("td");
         td.textContent = text;
-        if (numeric) td.className = "num";
+        td.className = cls;
         tr.append(td);
       }
       rows.append(tr);

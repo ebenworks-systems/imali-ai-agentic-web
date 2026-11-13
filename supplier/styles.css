@@ -4,7 +4,7 @@
 @font-face { font-family: "Space Mono"; src: url("assets/fonts/space-mono-400-latin.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 :root { color-scheme: light; --paper: #FBF7F1; --ink: #2A1E14; --soft: #6B5A4B; --amber: #B45309; --tint: #FDEFD9; --line: #EADFD0; }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 "Plus Jakarta Sans", system-ui, sans-serif; }
+body { margin: 0; background: radial-gradient(900px 520px at 88% -8%, rgba(251, 191, 36, 0.20), rgba(251, 191, 36, 0) 70%), radial-gradient(700px 480px at -10% 30%, rgba(180, 83, 9, 0.07), rgba(180, 83, 9, 0) 70%), var(--paper); background-repeat: no-repeat; color: var(--ink); font: 16px/1.55 "Plus Jakarta Sans", system-ui, sans-serif; }
 h1, h2, h3 { font-family: "Space Grotesk", system-ui, sans-serif; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 12px; }
 a { color: var(--amber); }
 code, pre { font-family: "Space Mono", ui-monospace, monospace; font-size: 0.86em; }
@@ -13,9 +13,28 @@ code, pre { font-family: "Space Mono", ui-monospace, monospace; font-size: 0.86e
 .logo { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--tint); color: var(--amber); border: 1px solid #F1C98F; }
 .chip { margin-left: auto; font-size: 0.78rem; font-weight: 600; padding: 6px 10px; border-radius: 999px; background: var(--tint); color: #6B3A06; }
 main { max-width: 1180px; margin: 0 auto; padding: 0 24px 56px; }
-.hero { padding: 28px 0 32px; }
-.hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.6rem); max-width: 18ch; color: #5C2E05; }
-.lead { color: var(--soft); max-width: 60ch; font-size: 1.08rem; margin: 0; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 48px; align-items: center; padding: 36px 0 48px; }
+.hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.9rem); max-width: 14ch; color: #5C2E05; }
+.lead { color: var(--soft); max-width: 52ch; font-size: 1.1rem; margin: 0; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.button { display: inline-block; font-weight: 600; padding: 13px 22px; border-radius: 14px; background: var(--amber); color: #FFFFFF; text-decoration: none; border: 1px solid var(--amber); }
+.button:hover { background: #92400E; border-color: #92400E; color: #FFFFFF; }
+.button.ghost { background: #FFFFFF; color: #6B3A06; border-color: #F1C98F; }
+.button.ghost:hover { background: var(--tint); color: #5C2E05; }
+.button:focus-visible { outline: 3px solid #F59E0B; outline-offset: 2px; }
+.facts { list-style: none; padding: 0; margin: 28px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.facts li { background: rgba(255, 255, 255, 0.75); border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; font-size: 0.86rem; color: var(--soft); line-height: 1.4; }
+.facts strong { display: block; color: var(--ink); font: 600 0.98rem "Space Grotesk", sans-serif; margin-bottom: 2px; }
+.desk-card { margin: 0; background: #FFFFFF; border: 1px solid var(--line); border-radius: 28px; padding: 24px; box-shadow: 0 24px 48px -28px rgba(92, 46, 5, 0.35), 0 2px 6px rgba(42, 30, 20, 0.05); position: relative; }
+.desk-card::before { content: ""; position: absolute; inset: -16px -16px auto auto; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(251, 191, 36, 0.38), rgba(251, 191, 36, 0)); z-index: -1; }
+.from { margin: 0 0 6px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--soft); }
+.bubble { margin: 0 0 16px; padding: 13px 15px; border-radius: 18px; font-size: 0.95rem; }
+.bubble-in { background: #EEF6F0; color: #12391F; border-bottom-left-radius: 6px; max-width: 94%; }
+.bubble-out { background: var(--tint); color: #3E2208; border-bottom-right-radius: 6px; margin-left: 6%; }
+.bubble-out .line { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; font-size: 0.88rem; font-variant-numeric: tabular-nums; }
+.bubble-out .line span:last-child { white-space: nowrap; font-weight: 600; }
+.bubble-out .total { border-top: 1px solid #F1C98F; margin-top: 6px; padding-top: 8px; font-weight: 700; }
+.desk-card figcaption { font-size: 0.84rem; color: var(--soft); }
 .layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr); gap: 20px; align-items: start; }
 .panel { background: #FFFFFF; border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: 0 8px 24px -14px rgba(42, 30, 20, 0.18); min-width: 0; }
 .table-wrap { overflow-x: auto; }
@@ -23,10 +42,16 @@ main { max-width: 1180px; margin: 0 auto; padding: 0 24px 56px; }
 .prices th { padding-right: 10px; text-align: left; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--soft); padding-bottom: 8px; }
 .prices td { padding: 9px 8px 9px 0; border-top: 1px solid var(--line); }
 .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.prices th.num { padding-right: 0; }
+.prices td.num + td.num, .prices th.num + th.num { padding-left: 14px; }
+.item-name { font-weight: 500; }
+.pack-under { display: none; }
+.prices tbody tr:hover td { background: #FFFBF4; }
 .terms { padding-left: 18px; color: var(--soft); font-size: 0.93rem; }
 .small { font-size: 0.84rem; color: var(--soft); }
 .note { font-size: 0.86rem; background: var(--tint); padding: 10px 12px; border-radius: 12px; color: #5C3205; }
 #assistant-status { font-size: 0.86rem; color: var(--soft); }
+#assistant-status:empty { display: none; }
 .files { margin-top: 20px; }
 .files pre { background: var(--tint); padding: 12px; border-radius: 12px; white-space: pre-wrap; overflow-wrap: anywhere; color: #5C2E05; }
 #agent-app { --ns-font: "Plus Jakarta Sans", system-ui, sans-serif; --ns-bg: #FFFFFF; --ns-fg: #2A1E14; --ns-primary: #B45309; --ns-accent: #B45309; --ns-border: #EADFD0; --ns-panelbg: #FFFFFF; --ns-msgbg: #F7F1E8; --ns-muted: #6B5A4B; }
@@ -37,5 +62,17 @@ main { max-width: 1180px; margin: 0 auto; padding: 0 24px 56px; }
 #agent-app .ns-header { flex-wrap: wrap; }
 body > dialog h2 { margin: 0 0 12px; font: 600 1.25rem "Space Grotesk", sans-serif; }
 body > dialog button + button { margin-left: 8px; }
-@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } }
-@media (max-width: 600px) { main { padding: 0 14px 40px; } .top { padding: 14px; } }
+@media (max-width: 900px) { .layout, .hero { grid-template-columns: minmax(0, 1fr); } .hero { gap: 28px; } .desk-card { max-width: 560px; } }
+@media (max-width: 600px) {
+  main { padding: 0 14px 40px; } .top { padding: 14px; }
+  .hero { padding: 12px 0 28px; }
+  .actions .button { flex: 1 1 auto; text-align: center; }
+  .facts { grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 20px; }
+  .facts li { padding: 10px 12px; }
+  .desk-card { display: none; }
+  .panel { padding: 18px 16px; }
+  .prices .col-pack { display: none; }
+  .pack-under { display: block; font-size: 0.8rem; color: var(--soft); margin-top: 2px; }
+  .prices td { padding: 11px 6px 11px 0; vertical-align: top; }
+}
+.panel h3 { margin-top: 22px; }

@@ -19,16 +19,40 @@
     <span class="chip">Agentic website</span>
   </header>
   <main>
-    <section class="hero">
-      <h1>Wholesale for corner shops in Nakuru town.</h1>
-      <p class="lead">Bread, milk, flour, sugar, oil and the rest of a shop's shelf, by the pack. Ask our sales desk agent below, or let your shop's own agent ask it for you.</p>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-text">
+        <h1 id="hero-title">Wholesale for corner shops in Nakuru town.</h1>
+        <p class="lead">Bread, milk, flour, sugar, oil and the rest of a shop's shelf, by the pack. Ask our sales desk agent, or let your shop's own agent ask it for you.</p>
+        <div class="actions">
+          <a class="button" href="#assistant">Ask the sales desk</a>
+          <a class="button ghost" href="#prices-title">See the price list</a>
+        </div>
+        <ul class="facts" aria-label="Terms in short">
+          <li><strong>Free delivery</strong> in Nakuru town from KSh&nbsp;5,000</li>
+          <li><strong>Next working day</strong> for every delivery</li>
+          <li><strong>Cash or M-Pesa</strong> on delivery or collection</li>
+        </ul>
+      </div>
+      <figure class="desk-card" aria-label="A shop's agent asks the sales desk for prices">
+        <p class="from">From a shop's agent</p>
+        <p class="bubble bubble-in">Restock for Neema's Corner Shop: 2 crates of bread, 1 bale of sugar, 2 trays of eggs and 1 carton of cooking oil. What does it cost?</p>
+        <p class="from">Bonde Wholesale sales desk</p>
+        <div class="bubble bubble-out">
+          <span class="line"><span>2 × Bread, crate of 10</span><span>KSh 1,020</span></span>
+          <span class="line"><span>1 × Sugar, bale of 10</span><span>KSh 1,550</span></span>
+          <span class="line"><span>2 × Eggs, tray of 30</span><span>KSh 750</span></span>
+          <span class="line"><span>1 × Cooking oil, carton of 12</span><span>KSh 3,300</span></span>
+          <span class="line total"><span>Total, delivered free next working day</span><span>KSh 6,620</span></span>
+        </div>
+        <figcaption>Both agents run in the shop owner's browser, and the desk quotes only from the price list below.</figcaption>
+      </figure>
     </section>
     <div class="layout">
       <section class="panel" aria-labelledby="prices-title">
         <h2 id="prices-title">Price list</h2>
         <div class="table-wrap">
           <table class="prices">
-            <thead><tr><th scope="col">Item</th><th scope="col">Pack</th><th scope="col" class="num">Pack price</th><th scope="col" class="num">Each</th></tr></thead>
+            <thead><tr><th scope="col">Item</th><th scope="col" class="col-pack">Pack</th><th scope="col" class="num">Pack price</th><th scope="col" class="num">Each</th></tr></thead>
             <tbody id="price-rows"><tr><td colspan="4">Loading the price list…</td></tr></tbody>
           </table>
         </div>
@@ -38,7 +62,7 @@
       </section>
       <section id="assistant" class="panel assistant" aria-labelledby="assistant-heading">
         <h2 id="assistant-heading">Ask the sales desk</h2>
-        <p class="note">Add your model key in the settings below the chat. Your messages go to the model provider you choose.</p>
+        <p class="note">The sales desk runs on your own model key. Your messages go only to the model provider you choose.</p>
         <p id="assistant-status" role="status">Connecting the agent…</p>
         <div id="agent-app">
           <div data-ns-slot="header"></div>
@@ -50,7 +74,7 @@
         </div>
       </section>
     </div>
-    <section class="panel files" aria-labelledby="files-title">
+    <section id="for-agents" class="panel files" aria-labelledby="files-title">
       <h2 id="files-title">For agents</h2>
       <p>Any agentic website can load this sales desk into its visitor's browser. Put this address in an agent's <code>tools</code> list:</p>
       <pre>https://imali-ai-agentic-supplier.vercel.app/bonde_wholesale</pre>

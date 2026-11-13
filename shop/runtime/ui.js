@@ -684,7 +684,7 @@ export function mountApp(root, { engine, trace, manifest }) {
   const nodeStatus = new Map(); // host -> idle|active|done
   {
     const b = splitBrand(manifest?.brand || net?.name);
-    nodeMeta.set(localHost, { label: b.label || net?.name, role: "your concierge", icon: b.icon, kind: "local" });
+    nodeMeta.set(localHost, { label: b.label || net?.name, role: "your agent", icon: b.icon, kind: "local" });
   }
   const frontSpec = net?.getAgentSpec(net.findFrontMan());
   for (const ref of frontSpec?.tools || []) {
@@ -1250,7 +1250,7 @@ export function mountApp(root, { engine, trace, manifest }) {
     setProfileHint(`Deleted setup "${oldName}".`);
   });
   refreshHint();
-  if (needsByok) setProfileHint(setupMessage, "warn");
+  // The first chat message already gives setupMessage; the settings panel does not repeat it.
 
   root.querySelector("#ns-apply").addEventListener("click", async () => {
     const p = new URLSearchParams(location.search);

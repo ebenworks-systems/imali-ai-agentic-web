@@ -80,7 +80,7 @@ export class BookView {
     const list = this.el("entries");
     list.replaceChildren();
     if (state.todayEntries.length === 0) {
-      list.append(this.make("li", "No entries yet today. Tell the agent what you sold, or use the form.", "empty"));
+      list.append(this.make("li", "No entries yet today. Tell your agent what you sold, or use the form.", "empty"));
     }
     for (const entry of [...state.todayEntries].reverse()) {
       const item = this.make("li");
@@ -134,7 +134,7 @@ export class BookView {
     const list = this.el("orders");
     list.replaceChildren();
     if (state.orderLists.length === 0) {
-      list.append(this.make("li", "No order list yet. Ask the agent to check prices with Bonde Wholesale.", "empty"));
+      list.append(this.make("li", "No order list yet. Ask your agent to check prices with Bonde Wholesale.", "empty"));
     }
     for (const order of [...state.orderLists].reverse()) {
       const item = this.make("li");

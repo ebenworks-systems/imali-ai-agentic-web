@@ -56,6 +56,11 @@ Edited files. Each one has a line near its top saying that it was changed:
   code never names Anthropic's API host. Visitors who want a Claude model reach it through
   OpenRouter or another OpenAI-compatible router.
 
+- `ui.js`, in this copy only (Imali AI shop book, 13 Nov 2026): the agent list calls this
+  site's front agent "your agent", the name Imali AI gives the agent that works for the
+  owner, where the agentic-web copy says "your concierge". Without a key, the settings
+  panel no longer repeats the key instruction that the first chat message already gives.
+
 Protocol name: `nsdeploy`. Use it for `<protocol_name>` in `agent-manifest.json`. It
 names the discovery files, such as `.well-known/nsdeploy.json`, that nsdeploy's tools read.
 

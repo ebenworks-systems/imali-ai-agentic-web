@@ -16,9 +16,9 @@ async function start() {
       sandboxWorkerUrl: new URL("runtime/sandbox-worker.js", siteBase).href,
     });
     const needsKey = !booted.engine.mockLLM && (!booted.engine.byokKey || booted.engine.byokKey === "demo");
-    status.textContent = needsKey
-      ? "The sales desk needs your model key. Add it in the settings below."
-      : "Sales desk connected.";
+    // The runtime's first chat message already asks for the key, so the status line
+    // stays empty until the sales desk is connected.
+    status.textContent = needsKey ? "" : "Sales desk connected.";
     return booted.engine;
   } catch (error) {
     status.textContent = "The sales desk could not load. The price list still works.";

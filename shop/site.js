@@ -71,14 +71,14 @@ export class AssistantMount {
         && (!booted.engine.byokKey || booted.engine.byokKey === "demo");
       // The runtime's own badge and settings panel already ask for the key, so the
       // status line stays empty until the agent is connected.
-      status.textContent = needsKey ? "" : "The agent is connected to this book.";
+      status.textContent = needsKey ? "" : "Your agent is connected to this book.";
       if (!needsKey) {
         AssistantMount.greet();
       }
       return booted.engine;
     } catch (error) {
       // The page must keep working without the assistant.
-      status.textContent = "The assistant could not load. You can still use the page directly.";
+      status.textContent = "Your agent could not load. The book still works by hand.";
       console.error("Assistant startup failed", error);
       return null;
     }
