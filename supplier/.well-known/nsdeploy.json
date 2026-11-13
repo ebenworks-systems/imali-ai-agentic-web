@@ -1,0 +1,18 @@
+{
+  "protocol": "nsdeploy-link/v1",
+  "exports": [
+    {
+      "network": "bonde_wholesale",
+      "front_man": "bonde_sales_desk",
+      "aliases": [
+        "bonde_wholesale",
+        "bonde_sales_desk"
+      ],
+      "url": "bonde_wholesale"
+    }
+  ],
+  "imports": [],
+  "link_updates": {
+    "mode": "browser-local"
+  }
+}

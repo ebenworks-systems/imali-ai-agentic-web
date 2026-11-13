@@ -1,0 +1,91 @@
+{
+  "brand": "Imali AI shop book",
+  "networks": [
+    {
+      "name": "imali_shop_book",
+      "front_man": "imali_bookkeeper",
+      "hocon": "./imali_shop_book.network.json",
+      "description": "Keep a shop's book from plain messages in any language: sales, stock, spending and who owes, with reports, a trading statement and supplier prices.",
+      "tags": [
+        "bookkeeping",
+        "small-business",
+        "africa",
+        "multilingual",
+        "agentified-website"
+      ],
+      "sample_queries": [
+        "Nimeuza mikate 3 na maziwa 2, pesa taslimu",
+        "Juma took 2 bags of sugar on credit",
+        "How much did I make in the last 7 days, and what sells most?",
+        "Write a statement of my last 30 days of trading for my landlord",
+        "Which items are low, and what would Bonde Wholesale charge to restock them?",
+        "Send KSh 500 to Juma by M-Pesa"
+      ]
+    }
+  ],
+  "llm_router": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "mock": false,
+    "byok_router": "https://openrouter.ai/api/v1"
+  },
+  "allowed_peers": [
+    "https://imali-ai-agentic-supplier.vercel.app"
+  ],
+  "peer_policy": {
+    "mode": "closed",
+    "deny_origins": [],
+    "note": "Local agents, page-local actions and the Bonde Wholesale agent network only. The visitor approves each contact with another site."
+  },
+  "agent_mcp": {
+    "protocol": "nsdeploy-agent-mcp/v1",
+    "network": "imali_shop_book",
+    "front_man": "imali_bookkeeper",
+    "available": false,
+    "reason": "This is a static bundle; a public MCP facade requires an application host."
+  },
+  "theme": {
+    "primary": "#0B8443"
+  },
+  "linking": {
+    "protocol": "nsdeploy-link/v1",
+    "exports": [
+      {
+        "network": "imali_shop_book",
+        "front_man": "imali_bookkeeper",
+        "aliases": [
+          "imali_shop_book",
+          "imali_bookkeeper"
+        ],
+        "url": "imali_shop_book"
+      }
+    ],
+    "imports": [
+      {
+        "reference": "bonde_wholesale",
+        "url": "https://imali-ai-agentic-supplier.vercel.app/bonde_wholesale"
+      }
+    ],
+    "link_updates": {
+      "mode": "browser-local"
+    }
+  },
+  "deployment": {
+    "mode": "static",
+    "self_contained_runtime": true,
+    "browser_mock": false,
+    "direct_byok": true,
+    "direct_mcp_requires_cors": true,
+    "public_mcp_facade": false
+  },
+  "actions": {
+    "version": 1,
+    "module": "./site-actions.js",
+    "agentTools": [
+      "read_book",
+      "get_report",
+      "save_entries",
+      "save_order_list",
+      "close_day"
+    ]
+  }
+}

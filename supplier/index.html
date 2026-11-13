@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#FBF7F1">
+  <title>Bonde Wholesale: price list and sales desk agent</title>
+  <meta name="description" content="Bonde Wholesale supplies shops in Nakuru town. Its sales desk agent answers prices, pack sizes and delivery for any shop's agent.">
+  <link rel="alternate" type="application/json" href="agent-manifest.json" title="Agent network manifest">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="prices.js"></script>
+  <script type="module" src="site.js"></script>
+</head>
+<body>
+  <header class="top">
+    <p class="mark"><span class="logo" aria-hidden="true">B</span> Bonde Wholesale</p>
+    <span class="chip">Agentic website</span>
+  </header>
+  <main>
+    <section class="hero">
+      <h1>Wholesale for corner shops in Nakuru town.</h1>
+      <p class="lead">Bread, milk, flour, sugar, oil and the rest of a shop's shelf, by the pack. Ask our sales desk agent below, or let your shop's own agent ask it for you.</p>
+    </section>
+    <div class="layout">
+      <section class="panel" aria-labelledby="prices-title">
+        <h2 id="prices-title">Price list</h2>
+        <div class="table-wrap">
+          <table class="prices">
+            <thead><tr><th scope="col">Item</th><th scope="col">Pack</th><th scope="col" class="num">Pack price</th><th scope="col" class="num">Each</th></tr></thead>
+            <tbody id="price-rows"><tr><td colspan="4">Loading the price list…</td></tr></tbody>
+          </table>
+        </div>
+        <h3>Terms</h3>
+        <ul id="terms" class="terms"></ul>
+        <p class="small">This table is drawn from the agent network file below, so the page and the agent always quote the same prices.</p>
+      </section>
+      <section id="assistant" class="panel assistant" aria-labelledby="assistant-heading">
+        <h2 id="assistant-heading">Ask the sales desk</h2>
+        <p class="note">Add your model key in the settings below the chat. Your messages go to the model provider you choose.</p>
+        <p id="assistant-status" role="status">Connecting the agent…</p>
+        <div id="agent-app">
+          <div data-ns-slot="header"></div>
+          <div class="assistant-panels">
+            <div data-ns-slot="chat"></div>
+            <div data-ns-slot="agents"></div>
+          </div>
+          <div data-ns-slot="settings"></div>
+        </div>
+      </section>
+    </div>
+    <section class="panel files" aria-labelledby="files-title">
+      <h2 id="files-title">For agents</h2>
+      <p>Any agentic website can load this sales desk into its visitor's browser. Put this address in an agent's <code>tools</code> list:</p>
+      <pre>https://imali-ai-agentic-supplier.vercel.app/bonde_wholesale</pre>
+      <ul>
+        <li><a href="agent-manifest.json">agent-manifest.json</a></li>
+        <li><a href="bonde_wholesale.network.json">bonde_wholesale.network.json</a></li>
+      </ul>
+      <p class="small">The Imali AI shop book's agent asks this desk for prices: <a href="https://imali-ai-agentic-web.vercel.app/">imali-ai-agentic-web.vercel.app</a>.</p>
+    </section>
+  </main>
+</body>
+</html>

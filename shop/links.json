@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "networks": {
+    "imali_shop_book": {
+      "bonde_wholesale": "https://imali-ai-agentic-supplier.vercel.app/bonde_wholesale"
+    }
+  }
+}

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#F7F5EE">
+  <title>Imali AI shop book: an open agentic website</title>
+  <meta name="description" content="Keep a shop's book from plain messages in any language. The agents run in your browser with the model key you choose, and can ask other agentic websites for prices.">
+  <link rel="icon" href="assets/imali-icon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="alternate" type="application/json" href="agent-manifest.json" title="Agent network manifest">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="view.js"></script>
+  <script type="module" src="site.js"></script>
+</head>
+<body>
+  <a class="skip" href="#assistant">Skip to the agent</a>
+  <header class="top">
+    <a class="brand" href="https://imali-ai.ebenworks.co/" aria-label="Imali AI home">
+      <img src="assets/imali-logo-horizontal.svg" alt="Imali AI" width="132" height="36">
+    </a>
+    <span class="chip chip-gold">Open agentic website</span>
+    <nav class="top-links" aria-label="Agent files">
+      <a href="#for-agents">For agents</a>
+      <a href="agent-manifest.json">agent-manifest.json</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-text">
+        <p class="eyebrow">Imali AI shop book</p>
+        <h1 id="hero-title">Say what you sold. Ask what you made.</h1>
+        <p class="lead">Neema runs a corner shop in Nakuru. She writes to the agent the way she talks, in Kiswahili or English, and her book fills itself: sales, stock, spending and who owes her. The agents run in your browser, on the model and key you choose, and they can ask her wholesaler's own agents for prices.</p>
+        <ul class="pills" aria-label="How it works">
+          <li><span class="dot"></span>Runs in your browser</li>
+          <li><span class="dot"></span>Your model, your key</li>
+          <li><span class="dot"></span>Talks to other agent sites</li>
+          <li><span class="dot"></span>You confirm every save</li>
+        </ul>
+      </div>
+      <figure class="hero-card" aria-label="An example message and the entries it makes">
+        <p class="bubble bubble-owner">Nimeuza mikate 3 na maziwa 2, pesa taslimu. Juma amechukua sukari 2 kwa deni.</p>
+        <p class="bubble bubble-agent">Saved in today's book:<br>
+          <span>3 x Bread at KSh 65 = KSh 195, paid</span>
+          <span>2 x Milk at KSh 60 = KSh 120, paid</span>
+          <span>2 x Sugar at KSh 180 = KSh 360, on credit to Juma</span>
+        </p>
+        <figcaption>One message, three entries. You see each one and confirm it before it is saved.</figcaption>
+      </figure>
+    </section>
+
+    <div class="layout">
+      <section id="book" class="book" aria-labelledby="book-title">
+        <div class="book-head">
+          <div>
+            <h2 id="book-title">Neema's Corner Shop</h2>
+            <p class="muted">Nakuru, Kenya · <span id="book-date">Today</span></p>
+          </div>
+          <p class="status" id="book-status" data-state="open">Open for entries</p>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span class="label">Sales today</span><strong id="stat-sales">KSh 0</strong></div>
+          <div class="stat"><span class="label">Profit today</span><strong id="stat-profit">KSh 0</strong><span class="hint">after expenses</span></div>
+          <div class="stat"><span class="label">Cash from the book</span><strong id="stat-cash">KSh 0</strong></div>
+          <div class="stat"><span class="label">Owed to the shop</span><strong id="stat-owed">KSh 0</strong><span class="hint" id="stat-owed-who"></span></div>
+        </div>
+        <a class="jump" href="#assistant">Write to the bookkeeper</a>
+
+        <div class="panel">
+          <h3>Today's entries</h3>
+          <ol id="entries" class="entries" aria-live="polite"></ol>
+        </div>
+
+        <div class="panel week">
+          <div class="panel-head">
+            <h3>Last 7 days</h3>
+            <p class="muted">Sales <strong id="week-total">KSh 0</strong> · profit <strong id="week-profit">KSh 0</strong></p>
+          </div>
+          <ol id="week-chart" class="chart" aria-label="Sales on each of the last 7 days"></ol>
+        </div>
+
+        <div class="split">
+          <div class="panel">
+            <h3>Stock</h3>
+            <table class="stock">
+              <thead><tr><th scope="col">Item</th><th scope="col" class="num">Price</th><th scope="col" class="num">On hand</th></tr></thead>
+              <tbody id="stock-rows"></tbody>
+            </table>
+          </div>
+          <div class="side">
+            <div class="panel">
+              <h3>Who owes the shop</h3>
+              <ul id="owed" class="owed"></ul>
+            </div>
+            <div class="panel">
+              <h3>Order lists</h3>
+              <ul id="orders" class="orders"></ul>
+            </div>
+          </div>
+        </div>
+
+        <details class="panel manual">
+          <summary>Add an entry by hand</summary>
+          <form id="entry-form" class="entry-form" novalidate>
+            <label>Kind
+              <select id="f-kind" name="kind">
+                <option value="sale">Sale</option>
+                <option value="stock_in">Stock in</option>
+                <option value="expense">Expense</option>
+                <option value="debt_payment">Customer paid back</option>
+              </select>
+            </label>
+            <label data-kinds="sale stock_in">Item <select id="f-item" name="itemId"></select></label>
+            <label data-kinds="sale stock_in">Quantity <input id="f-quantity" name="quantity" type="number" min="1" max="1000" inputmode="numeric" value="1"></label>
+            <label data-kinds="sale stock_in">Price each, KSh <input id="f-price" name="unitPrice" type="number" min="1" inputmode="numeric" placeholder="List price"></label>
+            <label data-kinds="sale debt_payment">Customer <input id="f-customer" name="customer" type="text" maxlength="40" autocomplete="off"></label>
+            <label data-kinds="sale" class="check"><input id="f-credit" name="credit" type="checkbox"> On credit</label>
+            <label data-kinds="expense">Category <select id="f-category" name="category"></select></label>
+            <label data-kinds="expense debt_payment">Amount, KSh <input id="f-amount" name="amount" type="number" min="1" inputmode="numeric"></label>
+            <label data-kinds="expense">Note <input id="f-note" name="note" type="text" maxlength="80" autocomplete="off"></label>
+            <div class="form-actions">
+              <button type="submit" class="button">Save entry</button>
+              <button type="button" class="button ghost" id="reset-book">Start over with the sample book</button>
+            </div>
+            <p id="form-message" class="form-message" role="status"></p>
+          </form>
+          <p class="muted small">Book version <span id="version">1</span>. The book lives in this browser only.</p>
+        </details>
+      </section>
+
+      <section id="assistant" class="assistant" aria-labelledby="assistant-heading">
+        <div class="assistant-intro">
+          <h2 id="assistant-heading">Talk to the bookkeeper</h2>
+          <p>Write what happened in the shop, or ask about money and stock. Try “Nimeuza mikate 3 na maziwa 2” or “What would Bonde Wholesale charge to restock?”</p>
+          <p class="assistant-note">Add your model key in the settings below the chat. Your messages and this book go to the model provider you choose. The book asks you before anything is saved.</p>
+        </div>
+        <p id="assistant-status" role="status">Connecting the agent… If this message stays, the agent could not load. The book still works by hand.</p>
+        <div id="agent-app">
+          <div data-ns-slot="header"></div>
+          <div class="assistant-panels">
+            <div data-ns-slot="chat"></div>
+            <div data-ns-slot="agents"></div>
+          </div>
+          <div data-ns-slot="settings"></div>
+        </div>
+      </section>
+    </div>
+
+    <section id="for-agents" class="for-agents" aria-labelledby="agents-title">
+      <h2 id="agents-title">For agents and the sites that run them</h2>
+      <p class="lead">This page follows the Open Agentic Web profile. Its agent network is published as data, runs in the visitor's browser, and can be loaded by any other agentic website.</p>
+      <div class="cards">
+        <article class="card">
+          <h3>The network</h3>
+          <p><code>imali_bookkeeper</code> is the front agent. It reads and writes the book through five site tools, hands written statements to <code>statement_writer</code>, and asks <code>bonde_wholesale</code>, a wholesaler's network on another website, for prices.</p>
+          <ul class="file-list">
+            <li><a href="agent-manifest.json">agent-manifest.json</a></li>
+            <li><a href="imali_shop_book.network.json">imali_shop_book.network.json</a></li>
+            <li><a href="links.json">links.json</a></li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Call it from your site</h3>
+          <p>Add this address to an agent's <code>tools</code> list. Your visitor's browser loads the network and runs it on your visitor's model. Their key never reaches us.</p>
+          <pre class="snippet" id="link-snippet">https://imali-ai-agentic-web.vercel.app/imali_shop_book</pre>
+        </article>
+        <article class="card">
+          <h3>What stays safe</h3>
+          <p>Every save opens a dialog with the exact entries. The agent cannot send money, message anyone or delete an entry. This browser contacts another site only after you approve it, and your key goes only to the model provider you chose.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <img src="assets/imali-icon.svg" alt="" width="28" height="28">
+    <p><strong>Imali AI.</strong> Africa's smartest AI Business OS. An Ebenworks product.</p>
+    <p class="muted">This page is a demo book kept in your browser. It is separate from the Imali AI app: <a href="https://imali-ai.ebenworks.co/">imali-ai.ebenworks.co</a>.</p>
+  </footer>
+</body>
+</html>

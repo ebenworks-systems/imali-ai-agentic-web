@@ -1,0 +1,7 @@
+{
+  "protocol": "nsdeploy-agent-mcp/v1",
+  "network": "imali_shop_book",
+  "front_man": "imali_bookkeeper",
+  "available": false,
+  "reason": "This is a static bundle; a public MCP facade requires an application host."
+}

@@ -1,0 +1,41 @@
+/* Bonde Wholesale: light theme only. */
+@font-face { font-family: "Plus Jakarta Sans"; src: url("assets/fonts/plus-jakarta-sans-latin.woff2") format("woff2"); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: "Space Grotesk"; src: url("assets/fonts/space-grotesk-latin.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Space Mono"; src: url("assets/fonts/space-mono-400-latin.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+:root { color-scheme: light; --paper: #FBF7F1; --ink: #2A1E14; --soft: #6B5A4B; --amber: #B45309; --tint: #FDEFD9; --line: #EADFD0; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 "Plus Jakarta Sans", system-ui, sans-serif; }
+h1, h2, h3 { font-family: "Space Grotesk", system-ui, sans-serif; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 12px; }
+a { color: var(--amber); }
+code, pre { font-family: "Space Mono", ui-monospace, monospace; font-size: 0.86em; }
+.top { display: flex; align-items: center; gap: 12px; max-width: 1180px; margin: 0 auto; padding: 18px 24px; }
+.mark { display: flex; align-items: center; gap: 10px; margin: 0; font: 600 1.15rem "Space Grotesk", sans-serif; }
+.logo { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--tint); color: var(--amber); border: 1px solid #F1C98F; }
+.chip { margin-left: auto; font-size: 0.78rem; font-weight: 600; padding: 6px 10px; border-radius: 999px; background: var(--tint); color: #6B3A06; }
+main { max-width: 1180px; margin: 0 auto; padding: 0 24px 56px; }
+.hero { padding: 28px 0 32px; }
+.hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.6rem); max-width: 18ch; color: #5C2E05; }
+.lead { color: var(--soft); max-width: 60ch; font-size: 1.08rem; margin: 0; }
+.layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr); gap: 20px; align-items: start; }
+.panel { background: #FFFFFF; border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: 0 8px 24px -14px rgba(42, 30, 20, 0.18); min-width: 0; }
+.table-wrap { overflow-x: auto; }
+.prices { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+.prices th { padding-right: 10px; text-align: left; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--soft); padding-bottom: 8px; }
+.prices td { padding: 9px 8px 9px 0; border-top: 1px solid var(--line); }
+.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.terms { padding-left: 18px; color: var(--soft); font-size: 0.93rem; }
+.small { font-size: 0.84rem; color: var(--soft); }
+.note { font-size: 0.86rem; background: var(--tint); padding: 10px 12px; border-radius: 12px; color: #5C3205; }
+#assistant-status { font-size: 0.86rem; color: var(--soft); }
+.files { margin-top: 20px; }
+.files pre { background: var(--tint); padding: 12px; border-radius: 12px; white-space: pre-wrap; overflow-wrap: anywhere; color: #5C2E05; }
+#agent-app { --ns-font: "Plus Jakarta Sans", system-ui, sans-serif; --ns-bg: #FFFFFF; --ns-fg: #2A1E14; --ns-primary: #B45309; --ns-accent: #B45309; --ns-border: #EADFD0; --ns-panelbg: #FFFFFF; --ns-msgbg: #F7F1E8; --ns-muted: #6B5A4B; }
+.assistant-panels { display: grid; gap: 12px; margin-top: 12px; }
+#agent-app.ns-composed-app [data-ns-slot="chat"] { height: 480px; }
+#agent-app .ns-chat { background: var(--ns-bg); }
+#agent-app button { margin: 0; }
+#agent-app .ns-header { flex-wrap: wrap; }
+body > dialog h2 { margin: 0 0 12px; font: 600 1.25rem "Space Grotesk", sans-serif; }
+body > dialog button + button { margin-left: 8px; }
+@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 600px) { main { padding: 0 14px 40px; } .top { padding: 14px; } }

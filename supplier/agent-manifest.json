@@ -1,0 +1,60 @@
+{
+  "brand": "Bonde Wholesale",
+  "networks": [
+    {
+      "name": "bonde_wholesale",
+      "front_man": "bonde_sales_desk",
+      "hocon": "./bonde_wholesale.network.json",
+      "description": "Bonde Wholesale's sales desk: prices, pack sizes, minimum orders and delivery for shops, from the published price list.",
+      "tags": ["wholesale", "price-list", "small-business", "agentified-website"],
+      "sample_queries": [
+        "What do 2 cartons of milk and a bale of sugar cost?",
+        "Do you deliver to Nakuru town, and when?",
+        "Price for 30 loaves of bread and 12 bottles of cooking oil",
+        "Can I pay on 30 days' credit?"
+      ]
+    }
+  ],
+  "llm_router": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "mock": false,
+    "byok_router": "https://openrouter.ai/api/v1"
+  },
+  "allowed_peers": [],
+  "peer_policy": {
+    "mode": "closed",
+    "deny_origins": [],
+    "note": "This network calls no other site. Any agentic website may load it."
+  },
+  "agent_mcp": {
+    "protocol": "nsdeploy-agent-mcp/v1",
+    "network": "bonde_wholesale",
+    "front_man": "bonde_sales_desk",
+    "available": false,
+    "reason": "This is a static bundle; a public MCP facade requires an application host."
+  },
+  "theme": {
+    "primary": "#B45309"
+  },
+  "linking": {
+    "protocol": "nsdeploy-link/v1",
+    "exports": [
+      {
+        "network": "bonde_wholesale",
+        "front_man": "bonde_sales_desk",
+        "aliases": ["bonde_wholesale", "bonde_sales_desk"],
+        "url": "bonde_wholesale"
+      }
+    ],
+    "imports": [],
+    "link_updates": { "mode": "browser-local" }
+  },
+  "deployment": {
+    "mode": "static",
+    "self_contained_runtime": true,
+    "browser_mock": false,
+    "direct_byok": true,
+    "direct_mcp_requires_cors": true,
+    "public_mcp_facade": false
+  }
+}

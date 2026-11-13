@@ -146,6 +146,10 @@ export class Book {
       // A delivery every few days keeps the shelves full.
       if (back % 4 === 1) {
         for (const item of CATALOG) {
+          // The last delivery had no tea or cooking oil, so those run low today.
+          if (back === 1 && (item.id === "tea_leaves" || item.id === "cooking_oil")) {
+            continue;
+          }
           const quantity = Math.max(item.reorderAt * 2, Math.round(item.start * 0.6));
           stock[item.id] += quantity;
           entries.push({ id: id++, day, time: "07:10", kind: "stock_in", itemId: item.id, quantity, unitCost: item.cost });
