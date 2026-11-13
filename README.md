@@ -7,9 +7,9 @@ agent network, published on another website, for prices.
 
 This is Ebenworks' entry in Cognizant's Open Agentic Web Challenge. It follows the
 [Minimum Viable Specification for a Worldwide Agentic Web](https://github.com/cognizant-ai-labs/agentic-web/blob/main/docs/worldwide_agentic_web_mvp_spec.md)
-(MVP Profile 0.2). It is a separate demo from the [Imali AI](https://imali-ai.ebenworks.co/)
+(MVP Profile 0.2). It is separate from the [Imali AI](https://imali-ai.ebenworks.co/)
 app and calls none of its servers. The shop, the wholesaler and every figure in the book are
-made up and generated in the visitor's browser.
+generated in the visitor's browser.
 
 ## The two sites
 

@@ -304,7 +304,7 @@ export class Book {
    */
   checkEntries(args) {
     if (this.isClosedToday()) {
-      return { ok: false, reason: `Today's book (${readableDay(this.today())}) is closed. Start over with the sample book to keep trying entries.`, field: "entries" };
+      return { ok: false, reason: `Today's book (${readableDay(this.today())}) is closed. Start the book again to keep trying entries.`, field: "entries" };
     }
     if (args.expectedVersion !== this.version) {
       return { ok: false, reason: `The book changed since it was read (version ${this.version} now, ${args.expectedVersion} given). Read the book again.`, field: "expectedVersion" };
@@ -591,7 +591,7 @@ export class Book {
       .sort((a, b) => b.quantity - a.quantity)
       .slice(0, 5);
     return {
-      shop: `${SHOP.name}, ${SHOP.town} (demo book)`,
+      shop: `${SHOP.name}, ${SHOP.town}`,
       period,
       from: readableDay(from),
       to: readableDay(to),

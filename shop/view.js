@@ -186,7 +186,7 @@ export class BookView {
     this.el("entry-form").addEventListener("submit", (event) => this.submit(event));
     this.el("reset-book").addEventListener("click", () => {
       this.app.reset();
-      this.say("The sample book is back.", "ok");
+      this.say("The book is back at its start.", "ok");
     });
   }
 
