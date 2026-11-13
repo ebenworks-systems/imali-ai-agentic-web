@@ -35,7 +35,10 @@ main { max-width: 1180px; margin: 0 auto; padding: 0 24px 56px; }
 .bubble-out .line span:last-child { white-space: nowrap; font-weight: 600; }
 .bubble-out .total { border-top: 1px solid #F1C98F; margin-top: 6px; padding-top: 8px; font-weight: 700; }
 .desk-card figcaption { font-size: 0.84rem; color: var(--soft); }
-.layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr); gap: 20px; align-items: start; }
+.layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr); grid-template-areas: "prices chat" "files chat"; grid-template-rows: auto 1fr; gap: 20px; align-items: start; }
+.layout > .panel:first-child { grid-area: prices; }
+.layout > .assistant { grid-area: chat; }
+.layout > .files { grid-area: files; }
 .panel { background: #FFFFFF; border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: 0 8px 24px -14px rgba(42, 30, 20, 0.18); min-width: 0; }
 .table-wrap { overflow-x: auto; }
 .prices { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
@@ -52,7 +55,7 @@ main { max-width: 1180px; margin: 0 auto; padding: 0 24px 56px; }
 .note { font-size: 0.86rem; background: var(--tint); padding: 10px 12px; border-radius: 12px; color: #5C3205; }
 #assistant-status { font-size: 0.86rem; color: var(--soft); }
 #assistant-status:empty { display: none; }
-.files { margin-top: 20px; }
+.files { margin-top: 0; }
 .files pre { background: var(--tint); padding: 12px; border-radius: 12px; white-space: pre-wrap; overflow-wrap: anywhere; color: #5C2E05; }
 #agent-app { --ns-font: "Plus Jakarta Sans", system-ui, sans-serif; --ns-bg: #FFFFFF; --ns-fg: #2A1E14; --ns-primary: #B45309; --ns-accent: #B45309; --ns-border: #EADFD0; --ns-panelbg: #FFFFFF; --ns-msgbg: #F7F1E8; --ns-muted: #6B5A4B; }
 .assistant-panels { display: grid; gap: 12px; margin-top: 12px; }
@@ -62,7 +65,7 @@ main { max-width: 1180px; margin: 0 auto; padding: 0 24px 56px; }
 #agent-app .ns-header { flex-wrap: wrap; }
 body > dialog h2 { margin: 0 0 12px; font: 600 1.25rem "Space Grotesk", sans-serif; }
 body > dialog button + button { margin-left: 8px; }
-@media (max-width: 900px) { .layout, .hero { grid-template-columns: minmax(0, 1fr); } .hero { gap: 28px; } .desk-card { max-width: 560px; } }
+@media (max-width: 900px) { .layout, .hero { grid-template-columns: minmax(0, 1fr); } .layout { grid-template-areas: "prices" "chat" "files"; grid-template-rows: none; } .hero { gap: 28px; } .desk-card { max-width: 560px; } }
 @media (max-width: 600px) {
   main { padding: 0 14px 40px; } .top { padding: 14px; }
   .hero { padding: 12px 0 28px; }
