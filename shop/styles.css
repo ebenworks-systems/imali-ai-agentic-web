@@ -90,9 +90,9 @@ main { max-width: 1280px; margin: 0 auto; padding: 0 28px 64px; }
 .entries li.empty { display: block; }
 
 .chart { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; height: 150px; align-items: end; }
-.chart li { display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: end; }
+.chart > div { display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: end; }
 .chart .bar { width: 100%; max-width: 44px; height: var(--h); background: linear-gradient(180deg, #2FB56B, var(--green)); border-radius: 10px 10px 4px 4px; }
-.chart li:last-child .bar { background: linear-gradient(180deg, #FFC94D, var(--gold)); }
+.chart > div:last-child .bar { background: linear-gradient(180deg, #FFC94D, var(--gold)); }
 .chart .day { font-size: 0.75rem; color: var(--ink-soft); }
 
 .split { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 16px; align-items: start; }
@@ -188,10 +188,9 @@ body > dialog button + button { margin-left: 8px; }
 .foot img { grid-row: span 2; }
 .foot p { margin: 0; }
 
-.jump { display: none; }
+.jump { display: inline-block; margin-top: 22px; text-align: center; font-weight: 600; padding: 13px 22px; border-radius: 14px; background: var(--green); color: #FFFFFF; text-decoration: none; }
+.jump:hover { color: #FFFFFF; background: #096E38; }
 @media (max-width: 1080px) {
-  .jump { display: block; text-align: center; font-weight: 600; padding: 13px 16px; border-radius: 14px; background: var(--green); color: #FFFFFF; text-decoration: none; }
-  .jump:hover { color: #FFFFFF; background: #096E38; }
   .layout { grid-template-columns: minmax(0, 1fr); }
   .assistant { position: static; }
   .cards { grid-template-columns: minmax(0, 1fr); }

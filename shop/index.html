@@ -39,6 +39,7 @@
           <li><span class="dot"></span>Talks to other agent sites</li>
           <li><span class="dot"></span>You confirm every save</li>
         </ul>
+        <a class="jump" href="#assistant">Write to the bookkeeper</a>
       </div>
       <figure class="hero-card" aria-label="An example message and the entries it makes">
         <p class="bubble bubble-owner">Nimeuza mikate 3 na maziwa 2, pesa taslimu. Juma amechukua sukari 2 kwa deni.</p>
@@ -67,8 +68,6 @@
           <div class="stat"><span class="label">Cash from the book</span><strong id="stat-cash">KSh 0</strong></div>
           <div class="stat"><span class="label">Owed to the shop</span><strong id="stat-owed">KSh 0</strong><span class="hint" id="stat-owed-who"></span></div>
         </div>
-        <a class="jump" href="#assistant">Write to the bookkeeper</a>
-
         <div class="panel">
           <h3>Today's entries</h3>
           <ol id="entries" class="entries" aria-live="polite"></ol>
@@ -79,7 +78,7 @@
             <h3>Last 7 days</h3>
             <p class="muted">Sales <strong id="week-total">KSh 0</strong> · profit <strong id="week-profit">KSh 0</strong></p>
           </div>
-          <ol id="week-chart" class="chart" aria-label="Sales on each of the last 7 days"></ol>
+          <div id="week-chart" class="chart" role="img" aria-label="Bar chart of sales on each of the last 7 days"></div>
         </div>
 
         <div class="split">
@@ -178,7 +177,7 @@
   <footer class="foot">
     <img src="assets/imali-icon.svg" alt="" width="28" height="28">
     <p><strong>Imali AI.</strong> Africa's smartest AI Business OS. An Ebenworks product.</p>
-    <p class="muted">This page is a demo book kept in your browser. It is separate from the Imali AI app: <a href="https://imali-ai.ebenworks.co/">imali-ai.ebenworks.co</a>.</p>
+    <p class="muted">Neema's Corner Shop and Bonde Wholesale are fictional, and this book lives only in your browser. Imali AI keeps real shops' books at <a href="https://imali-ai.ebenworks.co/">imali-ai.ebenworks.co</a>.</p>
   </footer>
 </body>
 </html>

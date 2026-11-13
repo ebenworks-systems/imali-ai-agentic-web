@@ -156,11 +156,12 @@ export class BookView {
     chart.replaceChildren();
     const top = Math.max(1, ...week.days.map((day) => day.sales));
     for (const day of week.days) {
-      const bar = this.make("li");
+      const bar = this.make("div");
       const fill = this.make("span", "", "bar");
       fill.style.setProperty("--h", `${Math.max(3, Math.round((day.sales / top) * 100))}%`);
       bar.title = `${day.date}: ${money(day.sales)}`;
       bar.append(fill, this.make("span", day.date.split(",")[0], "day"));
+      bar.setAttribute("aria-hidden", "true");
       chart.append(bar);
     }
     this.el("week-total").textContent = week.totals.sales;
