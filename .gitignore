@@ -4,3 +4,4 @@ node_modules/
 CLAUDE.local.md
 COMPACT-STATE.md
 shots/
+.playwright-cli/

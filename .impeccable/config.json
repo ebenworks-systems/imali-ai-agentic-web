@@ -1,0 +1,20 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "plus jakarta sans",
+        "createdAt": "2026-11-13T01:42:50.832Z",
+        "reason": "ew-imali: Imali AI's own web type; products/imali-ai/platform/src/app/globals.css sets --font-sans to Plus Jakarta Sans and --font-heading to Space Grotesk"
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "createdAt": "2026-11-13T01:42:50.853Z",
+        "reason": "ew-imali: Imali AI's own web type; products/imali-ai/platform/src/app/globals.css sets --font-sans to Plus Jakarta Sans and --font-heading to Space Grotesk"
+      }
+    ]
+  }
+}
